@@ -1,16 +1,16 @@
 module.exports = {
   env: {
     browser: true,
-    es2023: true
+    es2023: true,
   },
   extends: ['@nuxtjs', 'prettier'],
   parserOptions: {
     ecmaVersion: 2023,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['prettier'],
   rules: {
     'no-undef': 'off',
-    'prettier/prettier': 'error'
-  }
+    'prettier/prettier': 'error',
+  },
 }
