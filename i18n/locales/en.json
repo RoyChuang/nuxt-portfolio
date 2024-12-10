@@ -1,0 +1,16 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign In",
+    "noAccount": "Don't have an account?",
+    "register": "Register Now",
+    "emailRequired": "Please input your email",
+    "emailInvalid": "Please input a valid email",
+    "passwordRequired": "Please input your password",
+    "passwordLength": "Password must be at least 6 characters",
+    "success": "Login successful",
+    "error": "Login failed, please check your input"
+  }
+}

@@ -1,10 +1,30 @@
 <template>
-  <div>
-    <button
-      class="mt-6 bg-blue-600 px-8 py-3 text-xl font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-    >
-      立即報名
-    </button>
+  <div class="flex items-center gap-4 p-4">
     <BaseTestButton />
+    <n-button @click="handleStart"> 开始 </n-button>
+    <n-button :disabled="disabled" @click="handleFinish"> 结束 </n-button>
   </div>
 </template>
+
+<script lang="ts">
+import { useLoadingBar } from 'naive-ui'
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const loadingBar = useLoadingBar()
+    const disabledRef = ref(true)
+    return {
+      disabled: disabledRef,
+      handleStart() {
+        loadingBar.start()
+        disabledRef.value = false
+      },
+      handleFinish() {
+        loadingBar.finish()
+        disabledRef.value = true
+      },
+    }
+  },
+})
+</script>

@@ -11,17 +11,24 @@
     "lint": "eslint --ext .js,.vue ."
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^9.0.0-rc.2",
     "nuxt": "^3.14.1592",
+    "nuxtjs-naive-ui": "^1.0.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^12.0.0",
     "@nuxtjs/tailwindcss": "^6.12.2",
+    "@types/node": "^22.10.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "naive-ui": "^2.40.3",
     "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9"
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "typescript": "^5.7.2",
+    "unplugin-auto-import": "^0.18.6",
+    "unplugin-vue-components": "^0.27.5"
   }
 }

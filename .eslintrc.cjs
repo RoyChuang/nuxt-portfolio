@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     'no-undef': 'off',
     'prettier/prettier': 'error',
+    'vue/no-v-model-argument': 'off',
   },
 }

@@ -1,0 +1,16 @@
+{
+  "login": {
+    "title": "登入",
+    "email": "電子郵件",
+    "password": "密碼",
+    "submit": "登入",
+    "noAccount": "還沒有帳號？",
+    "register": "立即註冊",
+    "emailRequired": "請輸入電子郵件",
+    "emailInvalid": "請輸入有效的電子郵件",
+    "passwordRequired": "請輸入密碼",
+    "passwordLength": "密碼長度至少為 6 個字符",
+    "success": "登入成功",
+    "error": "登入失敗，請檢查輸入"
+  }
+} 
