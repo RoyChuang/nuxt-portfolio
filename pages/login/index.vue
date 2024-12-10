@@ -1,6 +1,15 @@
 <template>
   <div class="flex min-h-screen items-center justify-center bg-gray-50">
-    <n-card class="w-[400px]">
+    <div class="absolute right-4 top-4">
+      <n-select
+        v-model:value="locale"
+        :options="languageOptions"
+        size="small"
+        @update:value="setLanguage"
+      />
+    </div>
+
+    <n-card class="w-[400px] rounded-lg shadow-lg">
       <template #header>
         <div class="text-center text-2xl font-bold">{{ $t('login.title') }}</div>
       </template>
@@ -25,12 +34,6 @@
           <n-button type="primary" block @click="handleLogin">
             {{ $t('login.submit') }}
           </n-button>
-          <div class="text-center text-sm text-gray-600">
-            {{ $t('login.noAccount') }}
-            <NuxtLink to="/register" class="text-blue-600">
-              {{ $t('login.register') }}
-            </NuxtLink>
-          </div>
         </div>
       </template>
     </n-card>
@@ -38,13 +41,25 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n()
+import { useI18n } from 'vue-i18n'
+import { ref, reactive } from 'vue'
+import { useLanguage } from '~/composables/useLanguage'
+
+const { t, locale } = useI18n()
 const message = useMessage()
-const formRef = ref()
-const formValue = ref({
+const formRef = ref(null)
+const formValue = reactive({
   email: '',
   password: '',
 })
+
+const languageOptions = [
+  { label: '繁體中文', value: 'zh' },
+  { label: 'English', value: 'en' },
+]
+
+const { setLanguage } = useLanguage()
+
 const formRules = computed(() => ({
   email: [
     { required: true, message: t('login.emailRequired') },
