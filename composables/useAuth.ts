@@ -1,9 +1,13 @@
 export const useAuth = () => {
   const user = useState('user', () => null)
-  const token = useState('token', () => null)
-  const isLoggedIn = useState('isLoggedIn', () => false)
-  const api = useApi()
+  const authCookie = useCookie('auth_token', {
+    maxAge: 60 * 60 * 24 * 7, // 7天
+    // secure: true,  // 只在 HTTPS 下傳送
+    // sameSite: 'strict',  // 防止 CSRF 攻擊
+    // httpOnly: true  // 防止 XSS 攻擊，JavaScript 無法讀取
+  })
   const router = useRouter()
+  const api = useApi()
 
   const login = async (email: string, password: string) => {
     const { data, error } = await api.login(email, password)
@@ -14,8 +18,7 @@ export const useAuth = () => {
 
     if (data.value) {
       user.value = data.value.record
-      token.value = data.value.token
-      isLoggedIn.value = true
+      authCookie.value = data.value.token
       await router.push('/')
     }
 
@@ -24,15 +27,12 @@ export const useAuth = () => {
 
   const logout = () => {
     user.value = null
-    token.value = null
-    isLoggedIn.value = false
+    authCookie.value = null
     router.push('/login')
   }
 
   return {
     user,
-    token,
-    isLoggedIn,
     login,
     logout
   }

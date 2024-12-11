@@ -1,14 +1,15 @@
 import { defineNuxtRouteMiddleware, navigateTo } from 'nuxt/app'
 
 export default defineNuxtRouteMiddleware((to) => {
-  const isLoggedIn = useState('isLoggedIn')
-  console.log('Middleware:', { isLoggedIn: isLoggedIn.value, path: to.path })
+  const authCookie = useCookie('auth_token')
 
-  if (isLoggedIn.value && to.path === '/login') {
+  // 如果有 token 且訪問登入頁，重定向到首頁
+  if (authCookie.value && to.path === '/login') {
     return navigateTo('/')
   }
 
-  if (!isLoggedIn.value && to.path !== '/login') {
+  // 如果沒有 token 且不是訪問登入頁，重定向到登入頁
+  if (!authCookie.value && to.path !== '/login') {
     return navigateTo('/login')
   }
 })
