@@ -31,8 +31,14 @@
 
       <template #footer>
         <div class="flex flex-col gap-4">
-          <n-button type="primary" block @click="handleLogin">
-            {{ $t('login.submit') }}
+          <n-button 
+            type="primary" 
+            block 
+            :loading="loading"
+            :disabled="loading"
+            @click="handleLogin"
+          >
+            {{ t('login.submit') }}
           </n-button>
         </div>
       </template>
@@ -49,10 +55,11 @@ import { useAuth } from '@/composables/useAuth'
 const { t, locale } = useI18n()
 const message = useMessage()
 const formRef = ref(null)
-const formValue = reactive({
+const formValue = ref({
   email: '',
-  password: '',
+  password: ''
 })
+const loading = ref(false)
 
 const languageOptions = [
   { label: '繁體中文', value: 'zh' },
@@ -73,15 +80,18 @@ const formRules = computed(() => ({
 }))
 
 const auth = useAuth()
+console.log("🚀 ~ auth:", auth.isLoggedIn)
 
 const handleLogin = async () => {
   try {
+    loading.value = true
     await formRef.value?.validate()
+    await auth.login(formValue.value.email, formValue.value.password)
     message.success(t('login.success'))
-    auth.login()
-    navigateTo('/')
   } catch (err) {
     message.error(t('login.error'))
+  } finally {
+    loading.value = false
   }
 }
 </script>
