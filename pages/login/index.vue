@@ -43,7 +43,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { ref, reactive } from 'vue'
-import { useLanguage } from '~/composables/useLanguage'
+import { useLanguage } from '@/composables/useLanguage'
+import { useAuth } from '@/composables/useAuth'
 
 const { t, locale } = useI18n()
 const message = useMessage()
@@ -71,10 +72,14 @@ const formRules = computed(() => ({
   ],
 }))
 
+const auth = useAuth()
+
 const handleLogin = async () => {
   try {
     await formRef.value?.validate()
     message.success(t('login.success'))
+    auth.login()
+    navigateTo('/')
   } catch (err) {
     message.error(t('login.error'))
   }
