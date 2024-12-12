@@ -47,6 +47,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  layout: 'auth'
+})
 import { useI18n } from 'vue-i18n'
 import { ref, reactive } from 'vue'
 import { useLanguage } from '@/composables/useLanguage'
