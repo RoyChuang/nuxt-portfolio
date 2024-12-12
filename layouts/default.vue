@@ -21,8 +21,9 @@
           :collapsed-width="64"
           :width="240"
           :collapsed="isSidebarCollapsed"
-          show-trigger
-          :inverted="inverted"
+          show-trigger="arrow-circle"
+          @collapse="isSidebarCollapsed = true"
+          @expand="isSidebarCollapsed = false"
         >
           <n-menu
             :collapsed="isSidebarCollapsed"
