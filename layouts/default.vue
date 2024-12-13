@@ -1,53 +1,51 @@
 <template>
-  <ClientOnly>
-    <n-layout>
-      <!-- Header -->
-      <n-layout-header bordered :inverted="inverted">
-        <div class="flex items-center justify-between px-4 py-2">
-          <div class="flex items-center gap-2">
-            <MenuIcon class="h-6 w-6 cursor-pointer md:hidden" @click="toggleMobileSidebar" />
-            <div class="text-lg font-bold">My App</div>
-          </div>
-          <LogOutIcon class="h-6 w-6 cursor-pointer" @click="handleLogout" />
+  <n-layout>
+    <!-- Header -->
+    <n-layout-header bordered :inverted="inverted">
+      <div class="flex items-center justify-between px-4 py-2">
+        <div class="flex items-center gap-2">
+          <MenuIcon class="h-6 w-6 cursor-pointer md:hidden" @click="toggleMobileSidebar" />
+          <div class="text-lg font-bold">My App</div>
         </div>
-      </n-layout-header>
+        <LogOutIcon class="h-6 w-6 cursor-pointer" @click="handleLogout" />
+      </div>
+    </n-layout-header>
 
-      <n-layout has-sider>
-        <!-- Desktop Sidebar -->
-        <n-layout-sider
-          bordered
-          class="hidden md:block"
-          collapse-mode="width"
-          :collapsed-width="64"
-          :width="240"
+    <n-layout has-sider>
+      <!-- Desktop Sidebar -->
+      <n-layout-sider
+        bordered
+        class="hidden md:block"
+        collapse-mode="width"
+        :collapsed-width="64"
+        :width="240"
+        :collapsed="isSidebarCollapsed"
+        show-trigger="arrow-circle"
+        @collapse="isSidebarCollapsed = true"
+        @expand="isSidebarCollapsed = false"
+      >
+        <n-menu
           :collapsed="isSidebarCollapsed"
-          show-trigger="arrow-circle"
-          @collapse="isSidebarCollapsed = true"
-          @expand="isSidebarCollapsed = false"
-        >
-          <n-menu
-            :collapsed="isSidebarCollapsed"
-            :collapsed-width="64"
-            :collapsed-icon-size="22"
-            :options="menuOptions"
-            :inverted="inverted"
-          />
-        </n-layout-sider>
+          :collapsed-width="64"
+          :collapsed-icon-size="22"
+          :options="menuOptions"
+          :inverted="inverted"
+        />
+      </n-layout-sider>
 
-        <!-- Mobile Sidebar Drawer -->
-        <n-drawer v-model:show="showMobileSidebar" :width="240" placement="left">
-          <n-menu :options="menuOptions" :inverted="inverted" />
-        </n-drawer>
+      <!-- Mobile Sidebar Drawer -->
+      <n-drawer v-model:show="showMobileSidebar" :width="240" placement="left">
+        <n-menu :options="menuOptions" :inverted="inverted" />
+      </n-drawer>
 
-        <!-- Content -->
-        <n-layout-content>
-          <div class="p-4">
-            <slot />
-          </div>
-        </n-layout-content>
-      </n-layout>
+      <!-- Content -->
+      <n-layout-content>
+        <div class="p-4">
+          <slot />
+        </div>
+      </n-layout-content>
     </n-layout>
-  </ClientOnly>
+  </n-layout>
 </template>
 
 <script setup lang="ts">
@@ -65,10 +63,6 @@ const auth = useAuth()
 const inverted = ref(false)
 const isSidebarCollapsed = ref(false)
 const showMobileSidebar = ref(false)
-
-const toggleSidebar = () => {
-  isSidebarCollapsed.value = !isSidebarCollapsed.value
-}
 
 const toggleMobileSidebar = () => {
   showMobileSidebar.value = !showMobileSidebar.value

@@ -1,7 +1,5 @@
 <template>
-  <ClientOnly>
-    <div class="min-h-screen bg-gray-50">
-      <slot />
-    </div>
-  </ClientOnly>
+  <div class="min-h-screen bg-gray-50">
+    <slot />
+  </div>
 </template>

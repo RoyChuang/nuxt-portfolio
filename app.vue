@@ -1,12 +1,42 @@
 <template>
-  <n-loading-bar-provider>
-    <n-message-provider>
-      <div>
-        <NuxtRouteAnnouncer />
-        <NuxtLayout>
-          <NuxtPage />
-        </NuxtLayout>
-      </div>
-    </n-message-provider>
-  </n-loading-bar-provider>
+  <div>
+    <n-loading-bar-provider>
+      <n-message-provider>
+        <n-notification-provider>
+          <n-dialog-provider>
+            <!-- Global Loading -->
+            <div
+              id="global-loading"
+              class="fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-200"
+            >
+              <n-spin size="large" />
+            </div>
+
+            <!-- App Content -->
+            <NuxtLayout>
+              <NuxtPage />
+            </NuxtLayout>
+          </n-dialog-provider>
+        </n-notification-provider>
+      </n-message-provider>
+    </n-loading-bar-provider>
+  </div>
 </template>
+
+<script setup>
+onMounted(() => {
+  const loading = document.getElementById('global-loading')
+  if (loading) {
+    loading.style.opacity = '0'
+    setTimeout(() => {
+      loading.style.display = 'none'
+    }, 100)
+  }
+})
+</script>
+
+<style>
+#global-loading {
+  transition: opacity 0.2s;
+}
+</style>
