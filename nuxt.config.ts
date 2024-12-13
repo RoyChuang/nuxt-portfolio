@@ -29,4 +29,11 @@ export default defineNuxtConfig({
       }),
     ],
   },
+  // app: {
+  //   pageTransition: true,
+  //   pageTransition: {
+  //     name: 'fade',
+  //     mode: 'out-in',
+  //   },
+  // },
 })

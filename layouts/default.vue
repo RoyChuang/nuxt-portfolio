@@ -18,24 +18,31 @@
         class="hidden md:block"
         collapse-mode="width"
         :collapsed-width="64"
-        :width="240"
+        :width="200"
         :collapsed="isSidebarCollapsed"
         show-trigger="arrow-circle"
         @collapse="isSidebarCollapsed = true"
         @expand="isSidebarCollapsed = false"
       >
         <n-menu
+          :value="activeKey"
           :collapsed="isSidebarCollapsed"
           :collapsed-width="64"
           :collapsed-icon-size="22"
           :options="menuOptions"
           :inverted="inverted"
+          @update:value="handleMenuClick"
         />
       </n-layout-sider>
 
       <!-- Mobile Sidebar Drawer -->
       <n-drawer v-model:show="showMobileSidebar" :width="240" placement="left">
-        <n-menu :options="menuOptions" :inverted="inverted" />
+        <n-menu 
+          :value="activeKey"
+          :collapsed="isSidebarCollapsed" 
+          :options="menuOptions" 
+          :inverted="inverted" 
+          @update:value="handleMenuClick" />
       </n-drawer>
 
       <!-- Content -->
@@ -48,15 +55,10 @@
   </n-layout>
 </template>
 
+
 <script setup lang="ts">
 import { ref } from 'vue'
-import {
-  Menu as MenuIcon,
-  Home as HomeIcon,
-  User as UserIcon,
-  Settings as SettingsIcon,
-  LogOut as LogOutIcon,
-} from 'lucide-vue-next'
+import { LayoutDashboard, ListTodo, Users, Shield, Menu as MenuIcon, LogOut as LogOutIcon,} from 'lucide-vue-next'
 import { useAuth } from '@/composables/useAuth'
 
 const auth = useAuth()
@@ -72,22 +74,46 @@ const handleLogout = () => {
   auth.logout()
 }
 
+const router = useRouter()
+const route = useRoute()
+
+// 修改 activeKey 的處理邏輯
+const activeKey = ref(route.path === '/' ? 'dashboard' : route.path.substring(1))
+
+// 監聽路由變化
+watch(
+  () => route.path,
+  (newPath) => {
+    activeKey.value = newPath === '/' ? 'dashboard' : newPath.substring(1)
+  }
+)
+
+// 選單點擊處理
+const handleMenuClick = (key: string) => {
+  router.push(key === 'dashboard' ? '/' : `/${key}`)
+}
+
 const menuOptions = [
   {
-    label: 'Home',
-    key: 'home',
-    icon: () => h(HomeIcon, { size: 18 }),
+    label: 'Dashboard',
+    key: 'dashboard',
+    icon: () => h(LayoutDashboard, { size: 18 })
   },
   {
-    label: 'Profile',
-    key: 'profile',
-    icon: () => h(UserIcon, { size: 18 }),
+    label: 'Tasks',
+    key: 'tasks',
+    icon: () => h(ListTodo, { size: 18 })
   },
   {
-    label: 'Settings',
-    key: 'settings',
-    icon: () => h(SettingsIcon, { size: 18 }),
+    label: 'Users',
+    key: 'users',
+    icon: () => h(Users, { size: 18 })
   },
+  {
+    label: 'Roles',
+    key: 'roles',
+    icon: () => h(Shield, { size: 18 })
+  }
 ]
 </script>
 
