@@ -1,6 +1,7 @@
 <template>
   <div>
     <n-loading-bar-provider>
+      <LoadingProvider />
       <n-message-provider>
         <n-notification-provider>
           <n-dialog-provider>
@@ -22,21 +23,3 @@
     </n-loading-bar-provider>
   </div>
 </template>
-
-<script setup>
-onMounted(() => {
-  const loading = document.getElementById('global-loading')
-  if (loading) {
-    loading.style.opacity = '0'
-    setTimeout(() => {
-      loading.style.display = 'none'
-    }, 100)
-  }
-})
-</script>
-
-<style>
-#global-loading {
-  transition: opacity 0.2s;
-}
-</style>

@@ -31,9 +31,9 @@
 
       <template #footer>
         <div class="flex flex-col gap-4">
-          <n-button 
-            type="primary" 
-            block 
+          <n-button
+            type="primary"
+            block
             :loading="loading"
             :disabled="loading"
             @click="handleLogin"
@@ -47,20 +47,20 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'auth'
-})
 import { useI18n } from 'vue-i18n'
 import { ref, reactive } from 'vue'
 import { useLanguage } from '@/composables/useLanguage'
 import { useAuth } from '@/composables/useAuth'
+definePageMeta({
+  layout: 'auth',
+})
 
 const { t, locale } = useI18n()
 const message = useMessage()
 const formRef = ref(null)
 const formValue = ref({
   email: '',
-  password: ''
+  password: '',
 })
 const loading = ref(false)
 
@@ -83,7 +83,7 @@ const formRules = computed(() => ({
 }))
 
 const auth = useAuth()
-console.log("🚀 ~ auth:", auth.isLoggedIn)
+console.log('🚀 ~ auth:', auth.isLoggedIn)
 
 const handleLogin = async () => {
   try {
