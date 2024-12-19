@@ -83,7 +83,6 @@ const formRules = computed(() => ({
 }))
 
 const auth = useAuth()
-console.log('🚀 ~ auth:', auth.isLoggedIn)
 
 const handleLogin = async () => {
   try {

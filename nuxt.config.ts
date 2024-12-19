@@ -6,7 +6,7 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxtjs-naive-ui', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxtjs-naive-ui', '@nuxtjs/i18n', '@pinia/nuxt'],
   i18n: {
     vueI18n: './i18n.config.ts', // 添加这行
     locales: [

@@ -1,5 +1,15 @@
 <template>
   <n-layout>
+    <!-- 離線提示 -->
+    <div v-if="!online" class="fixed bottom-4 right-4 z-50">
+      <n-tag type="error" size="large">
+        <template #icon>
+          <div class="i-lucide-wifi-off mr-1" />
+        </template>
+        離線模式
+      </n-tag>
+    </div>
+
     <!-- Header -->
     <n-layout-header bordered :inverted="inverted">
       <div class="flex items-center justify-between px-4 py-2">
@@ -57,14 +67,37 @@
 
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { LayoutDashboard, ListTodo, Users, Shield, Menu as MenuIcon, LogOut as LogOutIcon,} from 'lucide-vue-next'
 import { useAuth } from '@/composables/useAuth'
-
+import { useOnline } from '@/composables/useOnline'
 const auth = useAuth()
+
 const inverted = ref(false)
 const isSidebarCollapsed = ref(false)
 const showMobileSidebar = ref(false)
+const { online } = useOnline();
+const message = useMessage()
+const notification = useNotification()
+
+// 監聽在線狀態
+watch(online, (isOnline) => {
+  if (!isOnline) {
+    notification.error({
+      title: '網路連線中斷',
+      content: '請檢查您的網路連線',
+      duration: 0,  // 持續顯示直到恢復連線
+      closable: true
+    })
+  } else {
+    notification.destroyAll()
+    notification.success({
+      title: '網路已恢復',
+      content: '您已重新連線',
+      duration: 3000
+    })
+  }
+})
 
 const toggleMobileSidebar = () => {
   showMobileSidebar.value = !showMobileSidebar.value

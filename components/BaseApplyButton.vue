@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import { useLoadingBar } from 'naive-ui'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
